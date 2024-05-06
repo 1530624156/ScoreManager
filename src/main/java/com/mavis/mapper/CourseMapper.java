@@ -10,4 +10,5 @@ import com.mavis.entity.Course;
  * @since 2024/5/6 10:05
  */
 public interface CourseMapper extends BaseMapper<Course> {
+
 }
