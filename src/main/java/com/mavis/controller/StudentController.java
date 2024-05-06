@@ -53,11 +53,39 @@ public class StudentController {
         }
         Student student = studentLogic.studentLogin(sid, password);
         if (student != null){
-            session.setAttribute("student", student);
             return RestResult.success(student);
         }else {
             return RestResult.fail("登录失败");
         }
+    }
+
+    /**
+     * 添加学生
+     * @param student 学生
+     * @return
+     */
+    @PostMapping("addstudent")
+    public RestResult addStudent(Student student){
+        if (student == null){
+            return RestResult.fail("传入参数不能为空");
+        }
+        boolean b = studentService.save(student);
+        return RestResult.neutrality(b);
+    }
+
+    /**
+     * 根据学号删除学生
+     * @param sid 学号
+     * @return
+     */
+    @PostMapping("deletestudentbysid")
+    public RestResult deleteStudentBySid(String sid){
+        boolean b = StringUtils.isBlank(sid);
+        if (b){
+            return RestResult.fail("传入学号不能为空");
+        }
+        boolean result = studentService.removeById(sid);
+        return RestResult.neutrality(result);
     }
 
 }
