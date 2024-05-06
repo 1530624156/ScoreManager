@@ -64,7 +64,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.mavis.scoremanager.ScoreManagerApplication</mainClass>
+                    <mainClass>com.mavis.ScoreManagerApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>
