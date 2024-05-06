@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
  * @author Mavis郭逸轩
  * @since 2024/5/6 10:02
  */
-@Service
+
 public interface CourseService extends IService<Course> {
 }

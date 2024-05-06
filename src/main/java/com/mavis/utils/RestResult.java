@@ -27,22 +27,11 @@ public final class RestResult<T> {
 
     private T results;
 
-    private ArrayList list;
-
-    public RestResult(Boolean status, String msg, Long count, T results) {
-        this.status = status;
-        this.msg = msg;
-        this.count = count;
-        this.results = results;
-    }
 
     public static <T> RestResult<T> success(T t) {
         return new RestResult<>(OPT_SUCCESS_STATUS, "ok", 0L, t);
     }
 
-    public static <T> RestResult<T> successList(T t, ArrayList list) {
-        return new RestResult<>(OPT_SUCCESS_STATUS, "ok", 0L, t,list);
-    }
 
     public static <T> RestResult<T> success() {
         return new RestResult<>(OPT_SUCCESS_STATUS, "ok", 0L, null);

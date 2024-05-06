@@ -1,6 +1,89 @@
+<!DOCTYPE html>
 <html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/layui/2.5.6/css/layui.css">
+    <script src="https://cdn.staticfile.org/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
 <body>
-<h1>hello word!!!</h1>
-<p>this is a html page</p>
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md6 layui-col-md-offset3">
+            <form class="layui-form" id="loginForm" action="/login" method="POST">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Username</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="sid" lay-verify="required" placeholder="Enter your username"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Password</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password" lay-verify="required" placeholder="Enter your password"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" id="loginBtn" lay-submit lay-filter="login">Login</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.staticfile.org/layui/2.5.6/layui.js"></script>
+<script>
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        // 监听表单提交
+        form.on('submit(login)', function (data) {
+            // 阻止表单默认提交
+            event.preventDefault();
+
+            // 获取表单数据
+            var sid = data.field.sid;
+            var password = data.field.password;
+
+            // TODO: 进行登录验证和处理逻辑
+            // 示例中使用jQuery的AJAX发送POST请求
+            $.ajax({
+                url: '/student/login',
+                type: 'POST',
+                data: {
+                    sid: sid,
+                    password: password
+                },
+                success: function (response) {
+                    // 登录成功的处理逻辑
+                    if (response.status == true){
+                        layer.msg('登录成功', { icon: 1 });
+                        console.log(response);
+                        console.log(response.data);
+                        console.log(sid);
+                    } else if (response.status == false){
+                        layer.msg('登录失败', { icon: 2 });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // 登录失败的处理逻辑
+                    console.log(error);
+                    layer.msg('请求登录失败: ' + error, { icon: 2 });
+                }
+            });
+
+            return false; // 阻止表单跳转
+        });
+    });
+</script>
 </body>
+
 </html>

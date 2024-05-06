@@ -36,4 +36,6 @@ public class ScoreController {
         List<Score> scores = scoreService.list();
         return RestResult.success(scores);
     }
+
+
 }
