@@ -41,6 +41,20 @@ public class StudentController {
     }
 
     /**
+     * 根据学号获取学生信息
+     * @param sid 学号
+     * @return
+     */
+    @GetMapping("getstudentbysid")
+    public RestResult getStudentBySid(String sid) {
+        if(StringUtils.isBlank(sid)){
+            return RestResult.fail("学号不能为空");
+        }
+        Student student = studentService.getById(sid);
+        return RestResult.success(student);
+    }
+
+    /**
      * 学生登录
      * @param sid 学号
      * @param password 密码
@@ -85,6 +99,20 @@ public class StudentController {
             return RestResult.fail("传入学号不能为空");
         }
         boolean result = studentService.removeById(sid);
+        return RestResult.neutrality(result);
+    }
+
+    /**
+     * 更新学生信息
+     * @param student 学生实体
+     * @return
+     */
+    @PostMapping("updatestudent")
+    public RestResult updateStudent(Student student){
+        if (student == null){
+            return RestResult.fail("传入参数不能为空");
+        }
+        boolean result = studentService.updateById(student);
         return RestResult.neutrality(result);
     }
 
