@@ -20,6 +20,7 @@ public class StudentLogic {
     @Resource
     private StudentMapper studentMapper;
 
+    //学生登录逻辑
     public Student studentLogin(String sid, String password){
         HashMap<String, String> paramap = new HashMap<>();
         paramap.put("sid", sid);
