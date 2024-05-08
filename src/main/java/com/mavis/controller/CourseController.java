@@ -71,11 +71,33 @@ public class CourseController {
 
     }
 
+    /**
+     * 根据cid删除课程信息
+     * @param cid
+     * @return
+     */
+    @PostMapping("deletecoursebycid")
+    public RestResult deleteCoreseByCid(String cid){
+        if (StringUtils.isBlank(cid)){
+            return RestResult.fail("传入参数不能为空");
+        }
+        boolean result = courseService.removeById(cid);
+        return RestResult.neutrality(result);
+    }
 
-
-
-
-
+    /**
+     * 更新课程信息
+     * @param course
+     * @return
+     */
+    @PostMapping("updatecourse")
+    public RestResult updateCourse(Course course){
+        if (course == null){
+            return RestResult.fail("传入参数不能为空");
+        }
+        boolean result = courseService.updateById(course);
+        return RestResult.neutrality(result);
+    }
 
 
 
