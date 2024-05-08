@@ -3,6 +3,7 @@ package com.mavis.logic;
 import com.mavis.entity.Score;
 import com.mavis.mapper.ScoreMapper;
 import com.mavis.service.ScoreService;
+import com.mavis.utils.MavisUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -20,6 +21,8 @@ public class ScoreLogic {
     private ScoreService scoreService;
     @Resource
     private ScoreMapper scoreMapper;
+    @Resource
+    private MavisUtils mavisUtils;
 
     /**
      * 添加成绩
@@ -27,7 +30,7 @@ public class ScoreLogic {
      * @return
      */
     public Boolean addScore(Score score){
-        String uuid = UUID.randomUUID().toString();
+        String uuid = mavisUtils.randomUUID();
         score.setUuid(uuid);
         boolean result = scoreService.save(score);
         return result;
