@@ -99,7 +99,4 @@ public class CourseController {
         return RestResult.neutrality(result);
     }
 
-
-
-
 }
