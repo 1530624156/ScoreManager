@@ -1,5 +1,4 @@
 package com.mavis.config;
-import com.mavis.config.interceptor.AdminInterceptor;
 import com.mavis.config.interceptor.LoginInterceptor;
 import com.mavis.entity.Admin;
 import org.springframework.context.annotation.Configuration;
