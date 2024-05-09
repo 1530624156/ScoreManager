@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
 /**
@@ -37,8 +38,8 @@ public class AdminController{
      * @param adminpassword
      * @return
      */
-    @PostMapping("adminlogin")
-    public RestResult adminLogin(String adminname,String adminpassword){
+    @PostMapping("login")
+    public RestResult adminLogin(String adminname, String adminpassword, HttpSession session){
         if (StringUtils.isBlank(adminname) || StringUtils.isBlank(adminpassword)){
             return RestResult.fail("用户名或密码不能为空");
         }
@@ -49,9 +50,28 @@ public class AdminController{
         if (admin == null){
             return RestResult.fail("登录失败");
         }else {
+            session.setAttribute("admin", admin);
             return RestResult.success(admin);
         }
     }
+
+    /**
+     * 管理员登出
+     * @param session
+     * @return
+     */
+    @PostMapping("logout")
+    public RestResult adminLogout(HttpSession session){
+        if(session == null){
+            // 可以选择抛出异常或返回错误信息
+            return RestResult.fail("会话已失效或不存在");
+        }
+        session.removeAttribute("admin");
+        return RestResult.success("登出成功");
+    }
+
+
+
 
 
 

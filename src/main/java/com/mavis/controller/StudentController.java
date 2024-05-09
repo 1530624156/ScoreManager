@@ -67,10 +67,25 @@ public class StudentController {
         }
         Student student = studentLogic.studentLogin(sid, password);
         if (student != null){
+            session.setAttribute("student", student);
             return RestResult.success(student);
         }else {
             return RestResult.fail("登录失败");
         }
+    }
+
+    /**
+     * 学生登出
+     * @param session
+     * @return
+     */
+    @PostMapping("logout")
+    public RestResult studentLogout(HttpSession session){
+        if (session == null) {
+            return RestResult.fail("会话不存在或已失效");
+        }
+        session.removeAttribute("student");
+        return RestResult.success("学生登出成功");
     }
 
     /**
