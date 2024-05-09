@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>文件上传</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/layui/2.5.6/css/layui.css">
+</head>
+<body>
+
+<div class="layui-container" style="margin-top: 20px;">
+    <div class="layui-row">
+        <div class="layui-col-md6 layui-col-md-offset3">
+            <form class="layui-form" action="" enctype="multipart/form-data">
+                <div class="layui-form-item">
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn" id="uploadBtn">选择文件</button>
+                        <div class="layui-upload-list">
+                            <input type="file" name="file" class="layui-upload-file" id="fileInput">
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.staticfile.org/layui/2.5.6/layui.js"></script>
+<script>
+    layui.use(['upload', 'form', 'layer'], function(){
+        var upload = layui.upload;
+        var form = layui.form;
+
+        // 文件上传
+        var uploadInst = upload.render({
+            elem: '#uploadBtn',
+            url: '/file/upload', // 处理上传的后端接口地址
+            accept: 'file', // 允许上传的文件类型，这里设置为任意类型
+            done: function(res){
+                // 上传成功的回调函数
+                if (res.status == true){
+                    layer.msg('上传成功');
+                }else{
+                    layer.msg('上传失败');
+                }
+            },
+            error: function(){
+                // 上传失败的回调函数
+                console.log('上传失败');
+            }
+        });
+
+        // 表单提交监听
+        form.on('submit(upload)', function(data){
+            // 执行表单提交操作
+            return false; // 阻止表单跳转
+        });
+    });
+</script>
+</body>
+</html>

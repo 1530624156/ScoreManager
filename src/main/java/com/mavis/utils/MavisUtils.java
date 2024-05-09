@@ -19,7 +19,22 @@ public class MavisUtils {
      */
     public String randomUUID(){
         String uuid = UUID.randomUUID().toString();
-        uuid.replace("-","");
+        uuid = uuid.replace("-","");
         return uuid;
+    }
+
+    /**
+     * 生成随机文件名称
+     * @return
+     */
+    public String randomFileName(){
+        String nowTime = MyDate.getNowTime();
+        String uuid = randomUUID();
+        uuid = uuid.substring(7, 12);
+        String fileName = nowTime + uuid;
+        fileName = fileName.replace(" ","");
+        fileName = fileName.replace("-","");
+        fileName = fileName.replace(":","");
+        return fileName;
     }
 }
