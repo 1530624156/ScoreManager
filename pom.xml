@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mavis</groupId>
     <artifactId>ScoreManager</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>ScoreManager</name>
     <description>ScoreManager</description>
     <properties>
