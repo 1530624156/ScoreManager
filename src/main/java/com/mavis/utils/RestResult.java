@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-
 /**
  * @program: fanyaapi
  * @description: Rest api请求结果统一封装对象
@@ -27,16 +25,13 @@ public final class RestResult<T> {
 
     private T results;
 
-
     public static <T> RestResult<T> success(T t) {
         return new RestResult<>(OPT_SUCCESS_STATUS, "ok", 0L, t);
     }
 
-
     public static <T> RestResult<T> success() {
         return new RestResult<>(OPT_SUCCESS_STATUS, "ok", 0L, null);
     }
-
 
     public static <T> RestResult<T> success(T t, Long count) {
         return new RestResult<>(OPT_SUCCESS_STATUS, "ok", count, t);
@@ -74,5 +69,3 @@ public final class RestResult<T> {
         }
     }
 }
-
-
