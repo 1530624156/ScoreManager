@@ -25,7 +25,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (session.getAttribute("student") != null || session.getAttribute("admin") != null){
             return true;
         }else {
-            response.sendRedirect("/studentlogin.html");
+            response.sendRedirect("/index.html");
             return false;
         }
     }
