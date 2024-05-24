@@ -33,4 +33,11 @@ public class Student {
     @TableField("grade")
     String grade;
 
+    public Student(String sid, String name, String college, String profession, String grade) {
+        this.sid = sid;
+        this.name = name;
+        this.college = college;
+        this.profession = profession;
+        this.grade = grade;
+    }
 }

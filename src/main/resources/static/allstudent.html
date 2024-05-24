@@ -45,12 +45,9 @@
             elem: '#test'
             ,url:'/student/getallstudent' // 获取数据接口
             ,toolbar: '#toolbarDemo'
-            ,defaultToolbar: ['filter', 'exports', 'print', {
-                title: '所有学生数据'
-                ,layEvent: 'LAYTABLE_TIPS'
-                ,icon: 'layui-icon-tips'
-            }]
+            ,defaultToolbar: ['filter', 'exports', 'print']
             ,height: 'full-200' // 最大高度减去其他容器已占有的高度差
+            ,weight: 'full-200'
             ,cellMinWidth: 80
             ,totalRow: false // 关闭合计行
             ,page: false //关闭分页
@@ -99,7 +96,7 @@
             if(obj.event === 'del'){
                 layer.confirm('真的删除么', function(index){
                     // 删除方法
-                    deleteuser(data.sid);
+                    deletestudent(data.sid);
                 });
             } else if(obj.event === 'edit'){
                 setSession('sid',data.sid,()=>{
@@ -110,18 +107,23 @@
                         shade: false,
                         maxmin: true, //开启最大化最小化按钮
                         area: ['50%', '80%'],
-                        content: 'updateuser.html'
+                        content: 'updatestudent.html'
                     });
                 })
             }
         });
     });
 
-    function deleteuser(id) {
-        $.post('user',{method:"deleteUserByUid",uid:id},(result)=>{
-            alert(result);
-            console.log(result);
-            window.location="./allstudent.html"
+    function deletestudent(sid) {
+        $.post('/student/deletestudentbysid',
+            {
+                sid:sid
+            },(result)=>{
+            if (result.status == true)
+            layer.msg('删除成功', { icon: 1 });
+                setTimeout(function (){
+                    window.location="./allstudent.html"
+                },700)
         })
     }
 

@@ -1,0 +1,123 @@
+<html>
+<head>
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
+    <script src="tool/My.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>编辑学生信息</legend>
+</fieldset>
+
+
+<form class="layui-form" action="" id="f1">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">学号：</label>
+        <div class="layui-input-block">
+            <input disabled type="text" name="sid" lay-verify="required"
+                   autocomplete="off" class="layui-input sid">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名：</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" lay-verify="required"
+                   autocomplete="off" class="layui-input name">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">学院：</label>
+        <div class="layui-input-block">
+            <input type="text" name="college" lay-verify="required"
+                   autocomplete="off" class="layui-input college">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">专业：</label>
+        <div class="layui-input-block">
+            <input type="text" name="profession" lay-verify="required"
+                   autocomplete="off" class="layui-input profession">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">班级：</label>
+        <div class="layui-input-block">
+            <input type="text" name="grade" lay-verify="required"
+                   autocomplete="off" class="layui-input grade">
+        </div>
+    </div>
+
+    <div align="center">
+        <button class="layui-btn layui-btn-normal adduser_btn">确认修改</button>
+        <button style="margin-left: 20px" class="layui-btn layui-btn-normal close_btn">关闭</button>
+    </div>
+
+</form>
+
+<script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
+<script src="tool/JQuery/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+
+
+<script type="text/javascript">
+
+    //点击关闭按钮关闭弹出层
+    $(".close_btn").on('click', function () {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    })
+
+    $(() => {
+        getSession('sid', (sid) => {
+            console.log(sid);
+            $.get('/student/getstudentbysid?sid=' + sid, function (result) {
+                var student = result.data
+                $('input[name=sid]').val(student.sid);
+                $('input[name=name]').val(student.name);
+                $('input[name=college]').val(student.college);
+                $('input[name=profession]').val(student.profession);
+                $('input[name=grade]').val(student.grade);
+            })
+
+            // 点击保存
+            $('.adduser_btn').on('click', () => {
+                var sid = $(".sid").val();
+                var name = $(".name").val()
+                var college = $(".college").val()
+                var profession = $(".profession").val()
+                var grade = $(".grade").val();
+                $.ajax({
+                    type: 'post',
+                    url: '/student/updatestudent',
+                    data: {
+                        sid: sid,
+                        name: name,
+                        college: college,
+                        profession: profession,
+                        grade: grade
+                    },
+                    success: function (result) {
+                        if (result.status == true){
+                            layer.msg('修改成功', { icon: 1 });
+                            //执行完成后关闭弹窗并且刷新父窗口
+                            setTimeout(function (){
+                                window.parent.location.reload();
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
+                            },1000)
+                        }
+
+                    }
+                })
+                return false;
+            })
+        })
+    })
+</script>
+</body>
+</html>
