@@ -27,7 +27,7 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="./">Student/学生登录</a></dd>
-                    <dd><a href="" class="logout">Sign out/退出登录</a></dd>
+                    <dd><a href="javascript:;" class="logout">Sign out/退出登录</a></dd>
                 </dl>
             </li>
         </ul>
@@ -112,8 +112,11 @@
             success:function(result){
                 if (result.status == true){
                     layer.msg('退出成功', { icon: 1 });
+                    setTimeout(function () {
+                        window.location.href = "./";
+                    }, 500);
                 }
-                window.location="./adminlogin.html";
+
             }
         });
     })
