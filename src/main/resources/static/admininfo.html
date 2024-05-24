@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="tool/JQuery/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="layui/css/layui.css" type="text/css">
+    <script src="tool/My.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+
+    <div style="margin-top: 10px">
+        <a class="layui-btn layui-btn-normal layui-btn-sm sendEmail-btn" href="javascript:;">
+            <i class="layui-icon">&#xe609;</i> 发送邮件通知
+        </a>
+    </div>
+
+
+
+    <script>
+
+        //弹出发送邮件窗口
+        $(".sendEmail-btn").on('click',function(){
+            layer.open({
+                type: 2,
+                title: '发送邮件窗口',
+                shadeClose: true,
+                shade: false,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['70%', '60%'],
+                content: './sendemail.html'
+            });
+        });
+    </script>
+</body>
+</html>
