@@ -18,7 +18,7 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="addStudent">添加学生</button>
+        <button class="layui-btn layui-btn-sm" lay-event="addCourse">添加课程</button>
 
     </div>
 </script>
@@ -33,7 +33,7 @@
     layui.use(['table', 'dropdown'], function(){
         var table = layui.table;
         var dropdown = layui.dropdown;
-        layer.msg('所有学生信息', {
+        layer.msg('所有课程信息', {
             closeBtn: 0,
             icon: 6,
             time: 800,
@@ -43,7 +43,7 @@
         // 创建渲染实例
         table.render({
             elem: '#test'
-            ,url:'/student/getallstudent' // 获取数据接口
+            ,url:'/course/getallcourse' // 获取数据接口
             ,toolbar: '#toolbarDemo'
             ,defaultToolbar: ['filter', 'exports', 'print']
             ,height: 'full-200' // 最大高度减去其他容器已占有的高度差
@@ -53,11 +53,11 @@
             ,page: false //关闭分页
             ,cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                ,{field:'sid', fixed: 'left',  title: '学号', sort: true, totalRowText: '合计：'}
-                ,{field:'name', title: '姓名'}
-                ,{field:'college', title:'学院', hide: 0, }
-                ,{field:'profession',  title: '专业'}
-                ,{field:'grade',  title: '班级'}
+                ,{field:'cid', fixed: 'left',  title: '课程号', sort: true, totalRowText: '合计：'}
+                ,{field:'cname', title: '课程名'}
+                ,{field:'schoolyear', title:'学年', hide: 0, }
+                ,{field:'semester',  title: '学期'}
+                ,{field:'credit',  title: '学分'}
                 ,{fixed: 'right', title:'操作', width: 125, minWidth: 180, toolbar: '#barDemo'}
             ]]
             ,done: function(){
@@ -74,15 +74,15 @@
             var checkStatus = table.checkStatus(id);
             var othis = lay(this);
             switch(obj.event){
-                case 'addStudent':
+                case 'addCourse':
                     layer.open({
                         type: 2,
-                        title: '添加用户',
+                        title: '添加课程',
                         shadeClose: true,
                         shade: false,
                         maxmin: true, //开启最大化最小化按钮
                         area: ['50%', '60%'],
-                        content: './addstudent.html'
+                        content: './addcourse.html'
                     });
                     break;
             };
@@ -96,35 +96,35 @@
             if(obj.event === 'del'){
                 layer.confirm('真的删除么', function(index){
                     // 删除方法
-                    deletestudent(data.sid);
+                    deletecourse(data.cid);
                 });
             } else if(obj.event === 'edit'){
-                setSession('sid',data.sid,()=>{
+                setSession('cid',data.cid,()=>{
                     layer.open({
                         type: 2,
-                        title: '编辑学生信息',
+                        title: '编辑课程信息',
                         shadeClose: true,
                         shade: false,
                         maxmin: true, //开启最大化最小化按钮
                         area: ['50%', '80%'],
-                        content: 'updatestudent.html'
+                        content: 'updatecourse.html'
                     });
                 })
             }
         });
     });
 
-    function deletestudent(sid) {
-        $.post('/student/deletestudentbysid',
+    function deletecourse(cid) {
+        $.post('/course/deletecoursebycid',
             {
-                sid:sid
+                cid:cid
             },(result)=>{
-            if (result.status == true)
-            layer.msg('删除成功', { icon: 1 });
+                if (result.status == true)
+                    layer.msg('删除成功', { icon: 1 });
                 setTimeout(function (){
-                    window.location="./allstudent.html"
+                    window.location="./allcourse.html"
                 },700)
-        })
+            })
     }
 
 </script>
