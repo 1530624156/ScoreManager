@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>成绩管理系统-介绍</title>
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
+</head>
+<body>
+
+<ul class="layui-nav layui-bg-green">
+    <li class="layui-nav-item"><p><font color="#f0f8ff" face="幼圆">成绩管理系统-介绍</font></p></li>
+</ul>
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+        <div class="layui-panel">
+            <div style="padding: 30px;">
+                <p><font size="8" face="幼圆" color="green"> 成绩管理系统-系统介绍 </font></p>
+
+                <div style="margin-top: 20px">
+                    <h3>系统功能：</h3>
+                    <ol>
+                        <li>学生管理：记录每个学生的信息</li>
+                        <li>课程管理：课程信息管理</li>
+                        <li>成绩管理：记录每名学生的每门课成的成绩信息</li>
+                        <li>管理员：管理员可以修改管理员信息</li>
+
+                    </ol>
+                </div>
+
+                <div style="margin-top: 20px">
+                    <h3>技术选型：</h3>
+                    <ol>
+                        <li>开发语言：Java/HTML/CSS/JavaScript</li>
+						<li>后端框架：springBoot</li>
+                        <li>前端框架：Layui,jquery</li>
+                        <li>数据库： Mysql</li>
+                        <li>持久层框架：MybatisPlus</li>
+                        <li>工具类：Fastjson,log4j,poi,MyJdbc,MyDate,lombok</li>
+                        <li>更多……</li>
+                    </ol>
+                </div>
+
+                <div style="margin-top: 20px; width: 30%;" >
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>捐赠</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="alert alert-warning">
+                                请作者喝杯咖啡(点击放大)
+                            </div>
+                            <p id="pay-qrcode" >
+                                <a href="javascript:;"><img src="/img/pay.png" width="100%" alt="请使用手机支付宝或者微信扫码支付">
+                                </a>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <script src="tool/JQuery/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+    <script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
+<script>
+
+    $('#pay-qrcode').click(function(){
+        var html=$(this).html();
+        parent.layer.open({
+            title: false,
+            type: 1,
+            closeBtn:false,
+            shadeClose:true,
+            area: ['600px', '360px'],
+            content: html
+        });
+    });
+
+</script>
+</body>
+</html>

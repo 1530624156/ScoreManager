@@ -55,6 +55,9 @@
 							// 请求成功的处理逻辑
 							if (result.status == true){
 								layer.msg('登录成功', { icon: 1 });
+								setTimeout(function (){
+									window.location.href = "./main.html";
+								},700)
 
 							} else if (result.status == false){
 								layer.msg('登录失败', { icon: 2 });

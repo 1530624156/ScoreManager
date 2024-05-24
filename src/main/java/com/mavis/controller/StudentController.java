@@ -1,5 +1,6 @@
 package com.mavis.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.mavis.entity.Student;
@@ -36,7 +37,8 @@ public class StudentController {
     @GetMapping("getallstudent")
     public RestResult getAllStudent(){
         List<Student> students = studentService.list();
-        return RestResult.success(students);
+        Long count = (long) students.size();
+        return RestResult.success(students,count,null,0);
     }
 
     /**
@@ -97,8 +99,13 @@ public class StudentController {
         if (student == null){
             return RestResult.fail("传入参数不能为空");
         }
-        boolean b = studentService.save(student);
-        return RestResult.neutrality(b);
+        try {
+            boolean b = studentService.save(student);
+            return RestResult.neutrality(b);
+        }catch(Exception e){
+            return RestResult.fail("添加失败");
+        }
+
     }
 
     /**

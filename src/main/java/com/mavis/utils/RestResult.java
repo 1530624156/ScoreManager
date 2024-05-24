@@ -23,8 +23,27 @@ public final class RestResult<T> {
 
     private Long count;
 
-    private T results;
+    private T data;
 
+    private int code;
+
+    public RestResult(Boolean status, String msg, Long count, T data) {
+        this.status = status;
+        this.msg = msg;
+        this.count = count;
+        this.data = data;
+    }
+
+    public RestResult(String msg, Long count, T data, int code) {
+        this.msg = msg;
+        this.count = count;
+        this.data = data;
+        this.code = code;
+    }
+
+    public static <T> RestResult<T> success(T t,Long count,String msg,int code) {
+        return new RestResult<>(OPT_SUCCESS_STATUS, msg, count, t, code);
+    }
     public static <T> RestResult<T> success(T t) {
         return new RestResult<>(OPT_SUCCESS_STATUS, "ok", 0L, t);
     }
