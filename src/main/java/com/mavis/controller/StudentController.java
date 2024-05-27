@@ -86,6 +86,8 @@ public class StudentController {
             return RestResult.fail("会话不存在或已失效");
         }
         session.removeAttribute("student");
+        session.removeAttribute("admin");
+        session.removeAttribute("sid");
         return RestResult.success("学生登出成功");
     }
 

@@ -67,6 +67,8 @@ public class AdminController{
             return RestResult.fail("会话已失效或不存在");
         }
         session.removeAttribute("admin");
+        session.removeAttribute("student");
+        session.removeAttribute("sid");
         return RestResult.success("登出成功");
     }
 
