@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Layui Select Box Example</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui-src@2.6.8/dist/css/layui.css">
+    <script src="https://cdn.jsdelivr.net/npm/layui-src@2.6.8/dist/layui.js"></script>
+</head>
+<body>
+<div class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">Select Box</label>
+        <div class="layui-input-block">
+            <select name="select" id="select-box" lay-verify="required">
+                <option value="">课程名</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'jquery'], function() {
+        var form = layui.form;
+        var $ = layui.jquery;
+
+        // 从数据库获取选项数据
+        $.ajax({
+            url: '/course/getallcourse',
+            method: 'GET',
+            success: function(response) {
+                var selectBox = document.getElementById('select-box');
+
+                // 清空原有选项
+                selectBox.options.length = 1;
+                datas=response.data;
+                // 将选项数据渲染到下拉框
+                datas.forEach(function(option) {
+                    var optionElement = document.createElement('option');
+                    optionElement.value = option.cid;
+                    optionElement.text = option.cname;
+                    selectBox.add(optionElement);
+                });
+
+                // 更新 Layui 表单元素
+                form.render('select');
+            },
+            error: function(error) {
+                console.error('Error fetching options:', error);
+            }
+        });
+    });
+</script>
+</body>
+</html>

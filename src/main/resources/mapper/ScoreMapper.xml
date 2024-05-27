@@ -2,5 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mavis.mapper.ScoreMapper">
 
+<!--    根据学号获取成绩列表-->
+    <select id="getScoreBySid" resultType="com.mavis.entity.Score" parameterType="hashmap">
+        select * from score where sid = #{sid}
+    </select>
 
 </mapper>

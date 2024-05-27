@@ -1,6 +1,5 @@
 package com.mavis.utils;
 
-import com.alibaba.fastjson.JSONObject;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * HttpUtils
+ * HttpUtils 接口请求工具
  *
  * @author Mavis郭逸轩
  * @since 2024/5/24 20:14
@@ -24,11 +23,11 @@ public class HttpUtils {
 
     /**
      * 执行发送邮件请求
-     * @param mailReceive
-     * @param mailTitle
-     * @param mailContent
-     * @param isHtml
-     * @return
+     * @param mailReceive 收件箱
+     * @param mailTitle 邮件标题
+     * @param mailContent 邮件内容
+     * @param isHtml 是否为HTML格式
+     * @return 是否发送成功
      */
     public Boolean sendEmailApi(String mailReceive, String mailTitle, String mailContent ,boolean isHtml){
         OkHttpClient client = new OkHttpClient();

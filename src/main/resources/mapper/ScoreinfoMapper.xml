@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mavis.mapper.ScoreinfoMapper">
+    <!--    根据学号获取成绩列表-->
+    <select id="getScoreInfoBySid" resultType="com.mavis.entity.vo.Scoreinfo" parameterType="hashmap">
+        select * from scoreinfo where sid = #{sid}
+    </select>
+
+    <resultMap id="BaseResultMap" type="com.mavis.entity.vo.Scoreinfo">
+            <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+            <result property="sid" column="sid" jdbcType="VARCHAR"/>
+            <result property="cid" column="cid" jdbcType="VARCHAR"/>
+            <result property="score" column="score" jdbcType="FLOAT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="cname" column="cname" jdbcType="VARCHAR"/>
+            <result property="credit" column="credit" jdbcType="FLOAT"/>
+            <result property="xnxq" column="xnxq" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+
+    <sql id="Base_Column_List">
+        uuid,sid,cid,
+        score,name,cname,
+        credit,xnxq
+    </sql>
+</mapper>

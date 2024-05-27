@@ -1,11 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
+    <script src="tool/My.js" type="text/javascript" charset="utf-8"></script>
+
 </head>
 <body>
-    <h1>成绩页面  开发中。。</h1>
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+
+
+<script src="tool/JQuery/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+    </div>
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="check">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="add">添加</a>
+
+</script>
+
+
+<script>
+    layui.use(['table', 'dropdown'], function(){
+        var table = layui.table;
+        var dropdown = layui.dropdown;
+        layer.msg('所有学生信息', {
+            closeBtn: 0,
+            icon: 6,
+            time: 800,
+            offset: '21px'
+        });
+
+        // 创建渲染实例
+        table.render({
+            elem: '#test'
+            ,url:'/student/getallstudent' // 获取数据接口
+            ,toolbar: '#toolbarDemo'
+            ,defaultToolbar: ['filter', 'exports', 'print']
+            ,height: 'full-200' // 最大高度减去其他容器已占有的高度差
+            ,weight: 'full-200'
+            ,cellMinWidth: 80
+            ,totalRow: false // 关闭合计行
+            ,page: false //关闭分页
+            ,cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'sid', fixed: 'left',  title: '学号', sort: true, totalRowText: '合计：'}
+                ,{field:'name', title: '姓名'}
+                ,{field:'college', title:'学院', hide: 0, }
+                ,{field:'profession',  title: '专业'}
+                ,{field:'grade',  title: '班级'}
+                ,{fixed: 'right', title:'操作', width: 125, minWidth: 180, toolbar: '#barDemo'}
+            ]]
+            ,done: function(){
+                var id = this.id;
+            }
+            ,error: function(res, msg){
+                console.log(res, msg)
+            }
+        });
+
+        // 工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var id = obj.config.id;
+            var checkStatus = table.checkStatus(id);
+            var othis = lay(this);
+            switch(obj.event){
+                case 'addScore':
+                    layer.open({
+                        type: 2,
+                        title: '添加成绩记录',
+                        shadeClose: true,
+                        shade: false,
+                        maxmin: true, //开启最大化最小化按钮
+                        area: ['50%', '60%'],
+                        content: './addscore.html'
+                    });
+                    break;
+            };
+        });
+
+
+        //触发单元格工具事件
+        table.on('tool(test)', function(obj){ // 双击 toolDouble
+            var data = obj.data;
+            // console.log(data)
+            if(obj.event === 'add'){
+                setSession('sid',data.sid,()=>{
+                    layer.open({
+                        type: 2,
+                        title: '添加成绩记录',
+                        shadeClose: true,
+                        shade: false,
+                        maxmin: true, //开启最大化最小化按钮
+                        area: ['50%', '60%'],
+                        content: './addscore.html'
+                    });
+                })
+            } else if(obj.event === 'check'){
+                setSession('sid',data.sid,()=>{
+                    layer.open({
+                        type: 2,
+                        title: '查看成绩信息',
+                        shadeClose: true,
+                        shade: false,
+                        maxmin: true, //开启最大化最小化按钮
+                        area: ['100%', '100%'],
+                        content: 'scorelist.html'
+                    });
+                })
+            }
+        });
+    });
+
+    function deletestudent(sid) {
+        $.post('/student/deletestudentbysid',
+            {
+                sid:sid
+            },(result)=>{
+                if (result.status == true)
+                    layer.msg('删除成功', { icon: 1 });
+                setTimeout(function (){
+                    window.location="./allstudent.html"
+                },700)
+            })
+    }
+
+</script>
 
 </body>
 </html>

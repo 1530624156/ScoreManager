@@ -1,7 +1,10 @@
 package com.mavis.controller;
 
 import com.mavis.entity.Score;
+import com.mavis.entity.vo.Scoreinfo;
 import com.mavis.logic.ScoreLogic;
+import com.mavis.mapper.ScoreMapper;
+import com.mavis.mapper.ScoreinfoMapper;
 import com.mavis.service.ScoreService;
 import com.mavis.utils.RestResult;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,6 +31,10 @@ public class ScoreController {
     private ScoreService scoreService;
     @Resource
     private ScoreLogic scoreLogic;
+    @Resource
+    private ScoreMapper scoreMapper;
+    @Resource
+    private ScoreinfoMapper scoreinfoMapper;
 
     /**
      * 获取所有成绩
@@ -92,6 +100,19 @@ public class ScoreController {
         }
         boolean result = scoreService.updateById(score);
         return RestResult.success(result);
+    }
+
+    /**
+     * 根据学号获取成绩列表
+     * @param sid 学号
+     * @return 成绩列表
+     */
+    @GetMapping("getscorebysid")
+    public RestResult getScoreBySid(String sid){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("sid",sid);
+        List<Scoreinfo> scores = scoreinfoMapper.getScoreInfoBySid(map);
+        return RestResult.success(scores);
     }
 
 

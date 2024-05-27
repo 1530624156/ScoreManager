@@ -1,0 +1,113 @@
+<html>
+<head>
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
+    <script src="tool/My.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>修改成绩信息</legend>
+</fieldset>
+
+
+<form class="layui-form" action="" id="f1">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">UUID：</label>
+        <div class="layui-input-block">
+            <input disabled type="text" name="uuid" lay-verify="required"
+                   autocomplete="off" class="layui-input uuid">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">学号：</label>
+        <div class="layui-input-block">
+            <input disabled type="text" name="sid" lay-verify="required"
+                    autocomplete="off" class="layui-input sid">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">课程号：</label>
+        <div class="layui-input-block">
+            <input disabled type="text" name="cid" lay-verify="required"
+                    autocomplete="off" class="layui-input cid">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">成绩：</label>
+        <div class="layui-input-block">
+            <input  type="text" name="score" lay-verify="required"
+                   autocomplete="off" class="layui-input score">
+        </div>
+    </div>
+
+
+
+    <div align="center">
+        <button class="layui-btn layui-btn-normal save_btn">确认修改</button>
+        <button style="margin-left: 20px" class="layui-btn layui-btn-normal close_btn">关闭</button>
+    </div>
+
+</form>
+
+<script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
+<script src="tool/JQuery/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+
+
+<script type="text/javascript">
+
+    //点击关闭按钮关闭弹出层
+    $(".close_btn").on('click', function () {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    })
+
+    $(() => {
+        getSession('uuid', (uuid) => {
+            $.get('/score/getscorebyuuid?uuid=' + uuid, function (result) {
+                var scores = result.data
+                $('input[name=uuid]').val(scores.uuid);
+                $('input[name=sid]').val(scores.sid);
+                $('input[name=cid]').val(scores.cid);
+                $('input[name=score]').val(scores.score);
+            })
+
+            // 点击保存
+            $('.save_btn').on('click', () => {
+                var uuid = $(".uuid").val();
+                var sid = $(".sid").val()
+                var cid = $(".cid").val()
+                var score = $(".score").val()
+                $.ajax({
+                    type: 'post',
+                    url: '/score/updatescore',
+                    data: {
+                        uuid: uuid,
+                        sid: sid,
+                        cid: cid,
+                        score: score
+                    },
+                    success: function (result) {
+                        if (result.status == true){
+                            layer.msg('修改成功', { icon: 1 });
+                            //执行完成后关闭弹窗并且刷新父窗口
+                            setTimeout(function (){
+                                window.parent.location.reload();
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
+                            },1000)
+                        }
+
+                    }
+                })
+                return false;
+            })
+        })
+    })
+</script>
+</body>
+</html>
