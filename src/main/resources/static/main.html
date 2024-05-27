@@ -1,12 +1,140 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>成绩管理系统-学生页面</title>
-    </head>
-    <body>
-    <h1>成绩管理系统-学生页面 。。。开发中</h1>
+<head>
+    <title>成绩管理系统</title>
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo layui-hide-xs layui-bg-black">成绩管理系统</div>
+        <!-- 头部区域（可配合layui 已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <!-- 移动端显示 -->
+            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
+                <i class="layui-icon layui-icon-spread-left"></i>
+            </li>
+            <li class="layui-nav-item layui-hide-xs sysintroduced"><a href="javascript:;">系 统 介 绍</a></li>
+            <li class="layui-nav-item layui-hide-xs"><a href="http://mavis01.top:88" target="_blank">作 者 博 客</a></li>
+            <li class="layui-nav-item layui-hide-xs"><a href="https://gitee.com/guo_yi_xuan/score-manager" target="_blank">开 源 地 址</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide layui-show-md-inline-block">
+                <a href="javascript:;" class="studentname">
+                    <img src="/img/header.jpg"
+                         class="layui-nav-img">
+
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;" class="logout">Sign out/退出登录</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item scoreinfo"><a href="javascript:;">成绩信息</a></li>
+<!--                <li class="layui-nav-item "><a class="coursemanager" href="javascript:;">课程管理</a></li>-->
+<!--                <li class="layui-nav-item "><a class="scoremanager" href="javascript:;">成绩管理</a></li>-->
+<!--                <li class="layui-nav-item "><a class="adminmanager" href="javascript:;">管理员</a></li>-->
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <div style="padding: 15px;">
+            <iframe src="./studentscore.html" frameborder="0" id="mainView" style="width: 88vw; height: 100vh; border:none; position: fixed; border-radius: 2px;"></iframe>
+        </div>
+    </div>
+
+    <div class="layui-footer" align="center">
+        <!-- 底部固定区域 -->
+        Copyright © 2024 武汉东湖学院 23级软件工程Z4班-Mavis郭逸轩
+    </div>
 
 
-    </body>
+</div>
+
+
+<script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
+<script src="tool/JQuery/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="tool/My.js" type="text/javascript" charset="utf-8"></script>
+
+
+
+<script>
+
+    $(() => {
+        getSession('student', (student) => {
+            if (student == null){
+                layer.msg('请先登录', { icon: 1 });
+                setTimeout(function (){
+                    window.location.href = "./index.html";
+                },1000)
+            }else {
+                sid = student.sid;
+                $(".studentname").text("欢迎您，" + student.name);
+                setSession('sid',student.sid);
+            }
+        })
+
+
+    })
+
+
+
+    //系统介绍页面显示事件
+    $(".sysintroduced").on('click',function(){
+        var mainView = $('#mainView')[0];
+        mainView.src = "./introduced.html";
+    });
+
+    //学生管理页面显示事件
+    $(".scoreinfo").on('click',function(){
+        var mainView = $('#mainView')[0];
+        mainView.src = "./studentscore.html";
+    });
+
+    //课程管理页面显示事件
+    $(".coursemanager").on('click',function (){
+        var mainView = $('#mainView')[0];
+        mainView.src = "./allcourse.html";
+    })
+
+    //成绩管理页面显示事件
+    $(".scoremanager").on('click',function(){
+        var mainView = $('#mainView')[0];
+        mainView.src = "./allscore.html";
+    });
+
+    //员工管理页面现实操作
+    $(".adminmanager").on('click',function (){
+        var mainView = $('#mainView')[0];
+        mainView.src = "./admininfo.html";
+    })
+
+
+
+    //退出登录事件
+    $(".logout").on('click',function(){
+        $.ajax({
+            type:'post',
+            url:'/student/logout',
+            success:function(result){
+                if (result.status == true){
+                    layer.msg('退出成功', { icon: 1 });
+                    setTimeout(function () {
+                        window.location.href = "./index.html";
+                    }, 500);
+                }
+
+            }
+        });
+    })
+</script>
+</body>
 </html>

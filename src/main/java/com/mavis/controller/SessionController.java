@@ -23,8 +23,8 @@ public class SessionController {
     }
 
     @RequestMapping("GetSession")
-    public String getSession(String key, HttpServletRequest request) {
-        String data = (String) request.getSession().getAttribute(key);
+    public Object getSession(String key, HttpServletRequest request) {
+        Object data = request.getSession().getAttribute(key);
         return data;
     }
 }
